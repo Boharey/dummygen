@@ -1,0 +1,39 @@
+# Node.js dependencies
+/node_modules/
+/.pnp/
+/.pnp.js
+
+# Testing output
+/coverage/
+
+# Production build output
+/build/
+/dist/
+
+# Environment files (do not commit sensitive data)
+.env
+.env.*
+
+
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files (e.g. VSCode, JetBrains)
+.idea/
+.vscode/
+
+# TailwindCSS cache
+.tailwind/
+
+# Jest coverage directory
+coverage/
+
+# CRACO config (optional, depending on your setup)
+.craco.config.js

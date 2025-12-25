@@ -1,0 +1,28 @@
+# Python-related
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environment
+/venv/
+.env
+
+# Distribution / packaging
+*.egg-info
+dist/
+build/
+
+# Logs
+*.log
+
+# Testing
+/coverage/
+*.cover
+
+# IDE and editor configurations
+.idea/
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db

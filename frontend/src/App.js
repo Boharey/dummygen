@@ -28,7 +28,12 @@ function App() {
     try {
       const response = await fetch(`${API}/fields`);
       const data = await response.json();
-      setFields(data);
+      setFields(
+        data.fields
+          ? data
+          : { fields: data }
+      );
+      
       console.log('Backend fields:', data.fields);
 
     } catch (error) {

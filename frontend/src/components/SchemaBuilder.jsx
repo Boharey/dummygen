@@ -50,6 +50,9 @@ function SchemaBuilder({ fields, schema, setSchema }) {
     });
   };
 
+  // code to check the version control of the frontend by vercel
+  console.log("SCHEMA BUILDER VERSION: NEW");
+
   const getFieldConfig = (fieldType) => {
     return fields?.fields[fieldType] || null;
   };

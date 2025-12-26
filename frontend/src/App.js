@@ -16,6 +16,9 @@ function App() {
   const [recordCount, setRecordCount] = useState(10);
   const [outputFormat, setOutputFormat] = useState('json');
   const [seed, setSeed] = useState('');
+  const [showJsonInput, setShowJsonInput] = useState(false);
+  const [jsonSchemaText, setJsonSchemaText] = useState('');
+
 
   useEffect(() => {
     fetchFields();
@@ -26,6 +29,8 @@ function App() {
       const response = await fetch(`${API}/fields`);
       const data = await response.json();
       setFields(data);
+      console.log('Backend fields:', data.fields);
+
     } catch (error) {
       console.error('Failed to fetch fields:', error);
     } finally {
@@ -78,6 +83,71 @@ function App() {
       setIsGenerating(false);
     }
   };
+
+  // NOT NECESSARY FOR PRODUCTION AS BACKEND HANDLES ALL THESE THINGS
+  // but only those which may be confused by user are kept here 
+  const TYPE_ALIASES = {
+    // Primitive → backend exact match
+    number: 'integer',
+    int: 'integer',
+    bool: 'boolean',
+
+    // IDs
+    id: 'uuid',
+
+    // Dates (people almost always mean "created date")
+    date: 'created_at',
+    datetime: 'created_at',
+
+    // Identity
+    name: 'full_name'
+  };
+
+
+
+  const applyJsonSchema = (jsonText) => {
+    try {
+      const raw = String(jsonText).trim();
+      const parsed = JSON.parse(raw);
+
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+        alert('JSON must be an object like { "field": "type" }');
+        return;
+      }
+
+      const newSchema = Object.entries(parsed).map(([fieldName, rawType]) => {
+        // 1️⃣ backend key takes priority
+        let resolvedType = null;
+
+        if (fields?.fields[rawType]) {
+          resolvedType = rawType;
+        } 
+        // 2️⃣ fallback to SAFE aliases only
+        else if (TYPE_ALIASES[rawType]) {
+          resolvedType = TYPE_ALIASES[rawType];
+        }
+
+        if (!resolvedType || !fields.fields[resolvedType]) {
+          throw new Error(
+            `Unknown field type: "${rawType}". Use a supported backend field type.`
+          );
+        }
+
+        return {
+          name: fieldName,
+          type: resolvedType,
+          constraints: {}
+        };
+      });
+
+      setSchema(newSchema);
+      setShowJsonInput(false);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+
 
   const downloadFullData = async () => {
     if (schema.length === 0) {
@@ -220,6 +290,46 @@ function App() {
             setSchema={setSchema}
           />
 
+          <button
+            type="button"
+            onClick={() => setShowJsonInput(true)}
+            style={{ marginLeft: '8px' }}
+          >
+            Provide schema via JSON
+          </button>
+
+          {showJsonInput && (
+            <div className="json-schema-input">
+              <h3>Paste Schema JSON</h3>
+
+              <textarea
+                rows={10}
+                value={jsonSchemaText}
+                onChange={(e) => setJsonSchemaText(e.target.value)}
+                placeholder={`Example:
+          {
+            "username": "string",
+            "email": "email",
+            "phone": "phone"
+          }`}
+                style={{ width: '100%' }}
+              />
+
+              <div style={{ marginTop: '8px' }}>
+                <button onClick={() => applyJsonSchema(jsonSchemaText)}>Apply</button>
+
+                <button
+                  onClick={() => {
+                    setShowJsonInput(false);
+                    setJsonSchemaText('');
+                  }}
+                  style={{ marginLeft: '8px' }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
           <div className="action-buttons">
             <button
               onClick={generatePreview}

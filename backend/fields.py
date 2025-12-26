@@ -178,6 +178,369 @@ FIELD_REGISTRY: Dict[str, Dict[str, Any]] = {
             {'name': 'max_nb_chars', 'type': 'number', 'label': 'Max Characters', 'required': False, 'default': 200}
         ]
     },
+
+    # Network
+    'ip': {
+        'label': 'IP Address',
+        'category': 'Network',
+        'faker_method': 'ipv4',
+        'constraints': []
+    },
+    'ipv6': {
+        'label': 'IPv6 Address',
+        'category': 'Network',
+        'faker_method': 'ipv6',
+        'constraints': []
+    },
+    'mac_address': {
+        'label': 'MAC Address',
+        'category': 'Network',
+        'faker_method': 'mac_address',
+        'constraints': []
+    },
+
+    # Location
+    'city': {
+        'label': 'City',
+        'category': 'Location',
+        'faker_method': 'city',
+        'constraints': []
+    },
+    'state': {
+        'label': 'State',
+        'category': 'Location',
+        'faker_method': 'state',
+        'constraints': []
+    },
+    'country': {
+        'label': 'Country',
+        'category': 'Location',
+        'faker_method': 'country',
+        'constraints': []
+    },
+    'zip_code': {
+        'label': 'Zip Code',
+        'category': 'Location',
+        'faker_method': 'postcode',
+        'constraints': []
+    },
+    'latitude': {
+        'label': 'Latitude',
+        'category': 'Location',
+        'faker_method': 'latitude',
+        'constraints': []
+    },
+    'longitude': {
+        'label': 'Longitude',
+        'category': 'Location',
+        'faker_method': 'longitude',
+        'constraints': []
+    },
+
+    # Web & System
+    'url': {
+        'label': 'URL',
+        'category': 'Web',
+        'faker_method': 'url',
+        'constraints': []
+    },
+    'user_agent': {
+        'label': 'User Agent',
+        'category': 'Web',
+        'faker_method': 'user_agent',
+        'constraints': []
+    },
+    'file_name': {
+        'label': 'File Name',
+        'category': 'System',
+        'faker_method': 'file_name',
+        'constraints': []
+    },
+
+    # Numbers / Metrics
+    'float': {
+        'label': 'Float',
+        'category': 'IDs & System',
+        'faker_method': 'pyfloat',
+        'faker_args': {
+            'min_value': 0,
+            'max_value': 1000,
+            'right_digits': 2
+        },
+        'constraints': []
+    },
+
+    'percentage': {
+        'label': 'Percentage',
+        'category': 'IDs & System',
+        'faker_method': 'pyfloat',
+        'faker_args': {
+            'min_value': 0,
+            'max_value': 100,
+            'right_digits': 2
+        },
+        'constraints': []
+    },
+
+    'rating': {
+        'label': 'Rating',
+        'category': 'Finance',
+        'faker_method': 'pyfloat',
+        'faker_args': {
+            'min_value': 1,
+            'max_value': 5,
+            'right_digits': 1
+        },
+        'constraints': []
+    },
+
+    # Authentication & Security
+    'password': {
+        'label': 'Password',
+        'category': 'Security',
+        'faker_method': 'password',
+        'constraints': [
+            {'name': 'length', 'type': 'number', 'label': 'Length', 'required': False, 'default': 12}
+        ]
+    },
+    'token': {
+        'label': 'Token',
+        'category': 'Security',
+        'faker_method': 'sha256',
+        'constraints': []
+    },
+
+    # =========================
+    # Analytics & Logs
+    # =========================
+
+    'http_status': {
+        'label': 'HTTP Status Code',
+        'category': 'Analytics',
+        'faker_method': 'random_element',
+        'faker_args': {
+            'elements': [200, 201, 204, 301, 302, 400, 401, 403, 404, 409, 422, 500, 502, 503]
+        },
+        'constraints': []
+    },
+
+    'response_time_ms': {
+        'label': 'Response Time (ms)',
+        'category': 'Analytics',
+        'faker_method': 'random_int',
+        'constraints': [
+            {'name': 'min', 'type': 'number', 'label': 'Minimum (ms)', 'required': False, 'default': 50},
+            {'name': 'max', 'type': 'number', 'label': 'Maximum (ms)', 'required': False, 'default': 3000}
+        ]
+    },
+
+    'request_method': {
+        'label': 'HTTP Method',
+        'category': 'Analytics',
+        'faker_method': 'random_element',
+        'faker_args': {
+            'elements': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
+        },
+        'constraints': []
+    },
+
+    'endpoint': {
+        'label': 'API Endpoint',
+        'category': 'Analytics',
+        'faker_method': 'uri_path',
+        'constraints': []
+    },
+
+
+    # =========================
+    # Business & Company
+    # =========================
+
+    'company': {
+        'label': 'Company Name',
+        'category': 'Business',
+        'faker_method': 'company',
+        'constraints': []
+    },
+
+    'job_title': {
+        'label': 'Job Title',
+        'category': 'Business',
+        'faker_method': 'job',
+        'constraints': []
+    },
+
+    # =========================
+    # Analytics & Logs
+    # =========================
+
+    'http_status': {
+        'label': 'HTTP Status Code',
+        'category': 'System',
+        'faker_method': 'random_element',
+        'faker_args': {
+            'elements': [200, 201, 400, 401, 403, 404, 500]
+        },
+        'constraints': []
+    },
+
+    'response_time_ms': {
+        'label': 'Response Time (ms)',
+        'category': 'System',
+        'faker_method': 'random_int',
+        'constraints': [
+            {'name': 'min', 'type': 'number', 'label': 'Minimum', 'required': False, 'default': 50},
+            {'name': 'max', 'type': 'number', 'label': 'Maximum', 'required': False, 'default': 2000}
+        ]
+    },
+
+    # =========================
+    # Media & Files
+    # =========================
+
+    'image_url': {
+        'label': 'Image URL',
+        'category': 'Media',
+        'faker_method': 'image_url',
+        'constraints': []
+    },
+
+    'file_path': {
+        'label': 'File Path',
+        'category': 'System',
+        'faker_method': 'file_path',
+        'constraints': []
+    },
+
+    # =========================
+    # Time (Advanced)
+    # =========================
+
+    'unix_timestamp': {
+        'label': 'Unix Timestamp',
+        'category': 'Dates & Time',
+        'faker_method': 'unix_time',
+        'constraints': []
+    },
+
+    # Middle Name
+    'middle_name': {
+        'label': 'Middle Name',
+        'category': 'Identity',
+        'faker_method': 'first_name',
+        'constraints': []
+    },
+
+    # Street Address
+    'street_address': {
+        'label': 'Street Address',
+        'category': 'Location',
+        'faker_method': 'street_address',
+        'constraints': []
+    },
+
+    # Time Zone
+    'time_zone': {
+        'label': 'Time Zone',
+        'category': 'Location',
+        'faker_method': 'timezone',
+        'constraints': []
+    },
+
+    # Unix Timestamp
+    'unix_timestamp': {
+        'label': 'Unix Timestamp',
+        'category': 'Dates & Time',
+        'faker_method': 'unix_time',
+        'constraints': []
+    },
+
+    # Referrer URL (analytics)
+    'referrer': {
+        'label': 'Referrer URL',
+        'category': 'Web',
+        'faker_method': 'uri',
+        'constraints': []
+    },
+
+    # Log Level (analytics)
+    'log_level': {
+        'label': 'Log Level',
+        'category': 'Analytics',
+        'faker_method': 'random_element',
+        'faker_args': {'elements': ['DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL']},
+        'constraints': []
+    },
+
+    # Secondary Phone
+    'phone_secondary': {
+        'label': 'Secondary Phone',
+        'category': 'Contact',
+        'faker_method': 'phone_number',
+        'constraints': []
+    },
+
+    # Currency Code
+    'currency_code': {
+        'label': 'Currency Code',
+        'category': 'Finance',
+        'faker_method': 'currency_code',
+        'constraints': []
+    },
+
+    # Tax ID (generic)
+    'tax_id': {
+        'label': 'Tax ID',
+        'category': 'Finance',
+        'faker_method': 'bban',
+        'constraints': []
+    },
+
+    # Bank Account Number
+    'bank_account': {
+        'label': 'Bank Account Number',
+        'category': 'Finance',
+        'faker_method': 'iban',
+        'constraints': []
+    },
+
+    # Color (hex)
+    'color_hex': {
+        'label': 'Color (Hex)',
+        'category': 'Misc',
+        'faker_method': 'hex_color',
+        'constraints': []
+    },
+
+    # Emoji
+    'emoji': {
+        'label': 'Emoji',
+        'category': 'Misc',
+        'faker_method': 'emoji',
+        'constraints': []
+    },
+
+    # Slug
+    'slug': {
+        'label': 'Slug',
+        'category': 'Misc',
+        'faker_method': 'slug',
+        'constraints': []
+    },
+
+    # Product SKU
+    'sku': {
+        'label': 'Product SKU',
+        'category': 'Business',
+        'faker_method': 'bothify',
+        'faker_args': {'text': '#??-##??'},
+        'constraints': []
+    },
+
+    
+
+
+
 }
 
 def get_field_metadata() -> Dict[str, Any]:

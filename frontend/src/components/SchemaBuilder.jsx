@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Plus, X, ChevronDown } from 'lucide-react';
 
+
+
+
 function SchemaBuilder({ fields, schema, setSchema }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [newField, setNewField] = useState({
@@ -8,15 +11,17 @@ function SchemaBuilder({ fields, schema, setSchema }) {
     type: '',
     constraints: {}
   });
+  const fieldMap = fields?.fields ?? fields ?? {};
 
   const categories = ['All', ...(fields?.categories || [])];
 
+
   const getFilteredFields = () => {
-    if (!fields) return [];
+    if (!fieldMap) return [];
     if (selectedCategory === 'All') {
-      return Object.entries(fields.fields);
+      return Object.entries(fieldMap);
     }
-    return Object.entries(fields.fields).filter(
+    return Object.entries(fieldMap).filter(
       ([_, config]) => config.category === selectedCategory
     );
   };
@@ -54,9 +59,8 @@ function SchemaBuilder({ fields, schema, setSchema }) {
   console.log("SCHEMA BUILDER VERSION: NEW");
 
   const getFieldConfig = (fieldType) => {
-    return fields?.fields[fieldType] || null;
+    return fieldMap[fieldType] || null;
   };
-
   const renderConstraintInput = (constraint) => {
     const { name, type, label, required, default: defaultValue } = constraint;
 
@@ -102,7 +106,9 @@ function SchemaBuilder({ fields, schema, setSchema }) {
             <div key={index} className="field-item" data-testid={`schema-field-${index}`}>
               <div className="field-info">
                 <span className="field-name">{field.name}</span>
-                <span className="field-type">{fields?.fields[field.type]?.label || field.type}</span>
+                <span className="field-type">
+                  {fieldMap[field.type]?.label || field.type}
+                </span>
                 {Object.keys(field.constraints).length > 0 && (
                   <span className="field-constraints">
                     {Object.entries(field.constraints)

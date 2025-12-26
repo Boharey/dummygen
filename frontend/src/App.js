@@ -84,8 +84,8 @@ function App() {
     }
   };
 
-  // NOT NECESSARY FOR PRODUCTION AS BACKEND HANDLES ALL THESE THINGS
-  // but only those which may be confused by user are kept here 
+ 
+  //  only those which may be confused by user are kept here 
   const TYPE_ALIASES = {
     // Primitive → backend exact match
     number: 'integer',
